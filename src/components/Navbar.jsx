@@ -1,6 +1,6 @@
 export function NavBar() {
   return (
-    <nav className="sticky top-0 flex justify-center w-full h-[48px] md:h-[80px] border border-solid border-[#DAD6D1] bg-[#F9F8F6]">
+    <nav className="z-50 sticky top-0 flex justify-center w-full h-[48px] md:h-[80px] border border-solid border-[#DAD6D1] bg-[#F9F8F6]">
       {/* Logo Section */}
       <div className="flex items-center justify-between w-[1200px]">
         <img
