@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
+//import { Button } from "@/components/ui/button";
 import { blogPosts } from "../data/blogPosts";
 import authorImage from "../assets/img/cat.svg";
+import { useState } from "react";
 
 function BlogCard(props) {
   return (
@@ -55,9 +56,11 @@ function BlogCard(props) {
 const categories = ["Highlight", "Cat", "Inspiration", "General"];
 
 export function ArticleSection() {
+  const [category, setCategory] = useState(categories[0]);
+
   return (
     <>
-      <div className=" font-poppins h-[236px]">
+      <div className=" font-poppins h-[236px] w-screen">
         <h1 className="ml-20 text-[24px] font-semibold py-[16px] md:text-left md:ml-20">
           Lasted articles
         </h1>
@@ -66,12 +69,14 @@ export function ArticleSection() {
           <div className="hidden md:flex space-x-2">
             {categories.map((button) => {
               return (
-                <Button
-                  className="px-4 py-3 transition-colors rounded-sm text-sm font-medium text-[#43403B] hover:bg-[#DAD6D1] bg-[muted]
-              "
+                <button
+                  onClick={() => setCategory(button)}
+                  className={`px-4 py-3 transition-colors rounded-sm text-sm font-medium bg-[#EFEEEB] text-[#43403B] ${
+                    category === button ? "bg-[#DAD6D1]" : "hover:bg-muted"
+                  }`}
                 >
                   {button}
-                </Button>
+                </button>
               );
             })}
           </div>

@@ -1,6 +1,6 @@
 export function HeroSection() {
   return (
-    <div className="flex justify-center md:h-[529px] w-full font-poppins">
+    <div className="flex justify-center md:h-[529px] w-screen font-poppins">
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-center md:gap-12 md:max-w-[1200px]">
         {/* Hero Header */}
         <div className="flex flex-col justify-center text-center  w-[343px] h-[184px] mt-[40px] md:w-[347px] md:h-[180px] md:gap-5 md:mt-0 md:text-right">

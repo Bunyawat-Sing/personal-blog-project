@@ -1,7 +1,7 @@
 import { Linkedin, Github, Mail } from "lucide-react";
 export function Footer() {
   return (
-    <footer className="flex flex-row justify-center items-center w-full gap-6 h-[152px] md:h-[144px] bg-gray-100 font-poppins">
+    <footer className="flex flex-row justify-center items-center w-screen gap-6 h-[152px] md:h-[144px] bg-gray-100 font-poppins">
       <div className="flex flex-col justify-center items-center md:flex-row md:justify-between w-[226px] md:w-[1200px]">
         <div className="flex items-center justify-between w-[226px] md:ml-[44px]">
           <h1 className="text-[16px] font-medium leading-[24px] text-[#43403B]">
