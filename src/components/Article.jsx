@@ -70,8 +70,9 @@ export function ArticleSection() {
             {categories.map((button) => {
               return (
                 <button
+                  key={button}
                   onClick={() => setCategory(button)}
-                  className={`px-4 py-3 transition-colors rounded-sm text-sm font-medium bg-[#EFEEEB] text-[#43403B] ${
+                  className={`px-4 py-3 rounded-sm text-sm font-medium text-[#43403B] ${
                     category === button ? "bg-[#DAD6D1]" : "hover:bg-muted"
                   }`}
                 >
