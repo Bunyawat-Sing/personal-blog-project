@@ -8,34 +8,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 //import { Button } from "@/components/ui/button";
-import { blogPosts } from "../data/blogPosts";
+//import { blogPosts } from "../data/blogPosts";
 import authorImage from "../assets/img/cat.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Search, Loader2 } from "lucide-react";
 
 function BlogCard(props) {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4">
-      <a href="#" className="relative h-[212px] sm:h-[360px]">
+      <button
+        className="relative h-[212px] sm:h-[360px]"
+        onClick={() => {
+          navigate(`/post/${props.id}`);
+        }}
+      >
         <img
           className="w-full h-full object-cover rounded-md"
           src={props.image}
           alt={props.title}
         />
-      </a>
+      </button>
       <div className="flex flex-col">
         <div className="flex">
           <span className="bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-600 mb-2">
             {props.category}
           </span>
         </div>
-        <a href="#">
+        <button
+          onClick={() => {
+            navigate(`/post/${props.id}`);
+          }}
+        >
           <h2 className="text-start font-bold text-xl mb-2 line-clamp-2 hover:underline">
             {props.title}
           </h2>
-        </a>
+        </button>
         <p className="text-muted-foreground text-sm mb-4 flex-grow line-clamp-3">
           {props.description}
         </p>
@@ -68,16 +79,6 @@ export function ArticleSection() {
   }, [category, page]);
 
   const fetchData = async () => {
-    /*try {
-      const endpoint =
-        category === "Highlight"
-          ? `https://blog-post-project-api.vercel.app/posts`
-          : `https://blog-post-project-api.vercel.app/posts?category=${category}`;
-      const response = await axios.get(endpoint);
-      setBlogPost(response.data.posts);
-    } catch (error) {
-      console.log(error);
-    }*/
     setLoading(true);
     try {
       const endpoint =
@@ -166,12 +167,16 @@ export function ArticleSection() {
       {/* Blogcard Section */}
       <article className="font-poppins mt-10 md:mt-0 grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-0 md:ml-20 md:mr-20">
         {loading ? (
-          <div className="col-span-2 text-center">Loading...</div>
+          <div className="flex flex-col items-center col-span-2">
+            <Loader2 className="w-12 h-12 animate-spin text-foreground " />
+            <div className="text-center">Loading...</div>
+          </div>
         ) : (
           blogPost.map((blogProps, index) => {
             return (
               <BlogCard
                 key={index}
+                id={blogProps.id}
                 image={blogProps.image}
                 category={blogProps.category}
                 title={blogProps.title}
@@ -190,7 +195,13 @@ export function ArticleSection() {
       {/* View More Button */}
       {more && !loading && (
         <div className="font-poppins w-full mt-20 mb-20 text-center">
-          <button onClick={loadMore} className="underline">
+          <button
+            onClick={loadMore}
+            className={`font-medium ${
+              !loading ? "underline hover:text-muted-foreground" : ""
+            }`}
+            disabled={loading}
+          >
             View More
           </button>
         </div>

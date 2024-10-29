@@ -1,16 +1,22 @@
-import "./App.css";
-import { NavBar } from "./components/Navbar";
-import { HeroSection } from "./components/Hero";
-import { Footer } from "./components/Footer";
-import { ArticleSection } from "./components/Article";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HomePage } from "./page/HomePage";
+import { ViewPage } from "./page/ViewPage";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <NavBar />
-      <HeroSection />
-      <ArticleSection />
-      <Footer />
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post/:postId" element={<ViewPage />} />
+        </Routes>
+      </Router>
+      <Toaster
+        toastOptions={{
+          unstyled: true,
+        }}
+      />
     </div>
   );
 }
