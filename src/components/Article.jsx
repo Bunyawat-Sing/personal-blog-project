@@ -72,11 +72,36 @@ export function ArticleSection() {
   const [blogPost, setBlogPost] = useState([]); //Blogpost
   const [page, setPage] = useState(1); //Page
   const [more, setMore] = useState(true); //Loadmore
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); //Loading
+  const [searchKeyword, setSearchKeyword] = useState(""); //Search from input (?keyword=)
+  const [suggestions, setSuggestions] = useState([]); //Suggest when have keyword
+  const [showDropdown, setShowDropdown] = useState(false); //Show dropdown of suggest item
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, [category, page]);
+
+  useEffect(() => {
+    if (searchKeyword.length > 0) {
+      setLoading(true);
+      const fetchSuggestions = async () => {
+        try {
+          const response = await axios.get(
+            `https://blog-post-project-api.vercel.app/posts?keyword=${searchKeyword}`
+          );
+          setSuggestions(response.data.posts); // Set search suggestions
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+          setLoading(false);
+        }
+      };
+      fetchSuggestions();
+    } else {
+      setSuggestions([]); // Clear suggestions if keyword is empty
+    }
+  }, [searchKeyword]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -142,7 +167,31 @@ export function ArticleSection() {
                 type="text"
                 placeholder="Search"
                 className=" py-3 rounded-sm font-medium bg-white text-[#75716B] h-[48px]"
+                onChange={(event) => setSearchKeyword(event.target.value)}
+                onFocus={() => setShowDropdown(true)}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setShowDropdown(false);
+                  }, 200);
+                }}
               />
+              {/*Suggestion Dropdown List*/}
+              {!loading &&
+                showDropdown &&
+                searchKeyword &&
+                suggestions.length > 0 && (
+                  <div className="absolute z-10 w-full mt-2 bg-background rounded-sm shadow-lg p-1">
+                    {suggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        className="text-start px-4 py-2 block w-full text-sm text-foreground hover:bg-[#EFEEEB] hover:text-muted-foreground hover:rounded-sm cursor-pointer"
+                        onClick={() => navigate(`/post/${suggestion.id}`)}
+                      >
+                        {suggestion.title}
+                      </button>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
           {/* Article Menu Dropdown List */}
